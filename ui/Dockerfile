@@ -4,11 +4,11 @@ LABEL maintainer "Benjamin Weder <Benjamin.Weder@web.de>"
 # add qemu binary to build on circle ci
 COPY qemu/qemu-arm-static /usr/bin/qemu-arm-static
 
-# add the prebuild ui
-COPY code/target/opentosca-ui.war ${CATALINA_HOME}/webapps/ROOT.war
-
 RUN rm /dev/random && ln -s /dev/urandom /dev/random \
     && rm -rf ${CATALINA_HOME}/webapps/*
+
+# add the prebuild ui
+COPY code/target/opentosca-ui.war ${CATALINA_HOME}/webapps/ROOT.war
    
 EXPOSE 8080
 
