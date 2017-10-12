@@ -6,6 +6,8 @@ COPY qemu/qemu-arm-static /usr/bin/qemu-arm-static
 
 # add the prebuild winery
 COPY code tmp/winery
+
+RUN mkdir -p /opt/winery
      
 # Injecting base URL for BPMN4TOSCA Modeler
 RUN apk update && apk upgrade && apk add unzip \
