@@ -9,7 +9,7 @@ COPY code tmp/winery
      
 # Injecting base URL for BPMN4TOSCA Modeler
 RUN apk update && apk upgrade && apk add unzip \
-    && unzip /tmp/winery/org.eclipse.winery.repository.rest/target/winery.war -d /opt/winery \
+    && unzip tmp/winery/org.eclipse.winery.repository.rest/target/winery.war -d /opt/winery \
     && sed -i "sXbpmn4toscamodelerBaseURI=.*Xbpmn4toscamodelerBaseURI=/winery-workflowmodelerX" /opt/winery/WEB-INF/classes/winery.properties \
     && sed -i "sX#repositoryPath=.*XrepositoryPath=/var/opentosca/repositoryX" /opt/winery/WEB-INF/classes/winery.properties   
 
