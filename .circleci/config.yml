@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout
       
-      # prebuild the container client outside of docker (speeds the build up)
+      # prebuild the container outside of docker (speeds the build up)
       - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/container.git -b master ./container/code 
       - run: cd ./container/code && mvn package
             
@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout
       
-      # prebuild the container client outside of docker (speeds the build up)
+      # prebuild the ui outside of docker (speeds the build up)
       - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/ui.git -b master ./ui/code 
       - run: cd ./ui/code && mvn package
             
@@ -92,6 +92,10 @@ jobs:
     machine: true
     steps:
       - checkout
+      
+      # prebuild the container client outside of docker (speeds the build up)
+      - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/winery.git -b master ./winery/code 
+      - run: cd ./winery/code && mvn package -DskipTests
             
       # prepare qemu to emulate an arm device on circle ci
       - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
@@ -116,4 +120,4 @@ workflows:
       - build_engine_plan
       - build_container
       - build_ui
-      # TODO: add Winery
+      - build_winery
