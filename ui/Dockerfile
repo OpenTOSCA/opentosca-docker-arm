@@ -15,6 +15,8 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
   apt-get update -qq && \
   apt-get install -qqy oracle-java8-installer
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+
+RUN ls
     
 # run UI on container start
-CMD java -jar ./opentosca-ui.war --server.port=8080
+CMD java -jar opentosca-ui.war --server.port=8080
