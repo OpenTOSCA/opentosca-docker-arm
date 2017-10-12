@@ -6,13 +6,10 @@ COPY qemu/qemu-arm-static /usr/bin/qemu-arm-static
 
 # add the prebuild winery
 COPY code tmp/winery
-
-# TODO: delete
-RUN cd tmp/winery/org.eclipse.winery.repository/target && ls
      
 # Injecting base URL for BPMN4TOSCA Modeler
 RUN apk update && apk upgrade && apk add unzip \
-    && unzip tmp/winery/org.eclipse.winery.repository/target/winery.war -d /opt/winery \
+    && unzip /tmp/winery/org.eclipse.winery.repository.rest/target/winery.war -d /opt/winery \
     && sed -i "sXbpmn4toscamodelerBaseURI=.*Xbpmn4toscamodelerBaseURI=/winery-workflowmodelerX" /opt/winery/WEB-INF/classes/winery.properties \
     && sed -i "sX#repositoryPath=.*XrepositoryPath=/var/opentosca/repositoryX" /opt/winery/WEB-INF/classes/winery.properties   
 
