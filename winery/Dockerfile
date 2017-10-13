@@ -5,10 +5,12 @@ LABEL maintainer "Benjamin Weder <Benjamin.Weder@web.de>"
 COPY qemu/qemu-arm-static /usr/bin/qemu-arm-static
 
 # add the prebuild winery
-COPY code/org.eclipse.winery.repository.rest/target/winery.war tmp/winery
-COPY code/org.eclipse.winery.repository.ui/target/winery-ui.war tmp/winery
-COPY code/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war tmp/winery
-COPY code/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war tmp/winery
+COPY code/org.eclipse.winery.repository.rest/target/winery.war tmp/winery/winery.war
+COPY code/org.eclipse.winery.repository.ui/target/winery-ui.war tmp/winery/winery-ui.war
+COPY code/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war tmp/winery/winery-topologymodeler.war
+COPY code/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war tmp/winery/winery-workflowmodeler.war
+
+RUN cd tmp/winery && ls
 
 RUN mkdir -p /opt/winery
      
