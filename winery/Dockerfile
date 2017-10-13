@@ -20,7 +20,7 @@ RUN rm /dev/random && ln -s /dev/urandom /dev/random \
     
 RUN mkdir -p /var/opentosca/repository
 
-RUN cp /opt/winery ${CATALINA_HOME}/webapps/winery \
+RUN cp -r /opt/winery ${CATALINA_HOME}/webapps/winery \
     && cp -r tmp/winery/org.eclipse.winery.repository.ui/target/winery-ui.war ${CATALINA_HOME}/webapps/ROOT.war \
     && cp -r tmp/winery/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war ${CATALINA_HOME}/webapps \
     && cp -r tmp/winery/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war ${CATALINA_HOME}/webapps 
