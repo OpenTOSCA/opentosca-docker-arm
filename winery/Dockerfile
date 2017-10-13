@@ -10,8 +10,6 @@ COPY code/org.eclipse.winery.repository.ui/target/winery-ui.war tmp/winery/winer
 COPY code/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war tmp/winery/winery-topologymodeler.war
 COPY code/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war tmp/winery/winery-workflowmodeler.war
 
-RUN cd tmp/winery && ls
-
 RUN mkdir -p /opt/winery
      
 # Injecting base URL for BPMN4TOSCA Modeler
