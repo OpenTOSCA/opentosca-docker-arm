@@ -5,13 +5,16 @@ LABEL maintainer "Benjamin Weder <Benjamin.Weder@web.de>"
 COPY qemu/qemu-arm-static /usr/bin/qemu-arm-static
 
 # add the prebuild winery
-COPY code tmp/winery
+COPY code/org.eclipse.winery.repository.rest/target/winery.war tmp/winery
+COPY code/org.eclipse.winery.repository.ui/target/winery-ui.war tmp/winery
+COPY code/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war tmp/winery
+COPY code/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war tmp/winery
 
 RUN mkdir -p /opt/winery
      
 # Injecting base URL for BPMN4TOSCA Modeler
 RUN apk update && apk upgrade && apk add unzip \
-    && unzip tmp/winery/org.eclipse.winery.repository.rest/target/winery.war -d /opt/winery \
+    && unzip tmp/winery/winery.war -d /opt/winery \
     && sed -i "sXbpmn4toscamodelerBaseURI=.*Xbpmn4toscamodelerBaseURI=/winery-workflowmodelerX" /opt/winery/WEB-INF/classes/winery.properties \
     && sed -i "sX#repositoryPath=.*XrepositoryPath=/var/opentosca/repositoryX" /opt/winery/WEB-INF/classes/winery.properties   
 
@@ -21,9 +24,9 @@ RUN rm /dev/random && ln -s /dev/urandom /dev/random \
 RUN mkdir -p /var/opentosca/repository
 
 RUN cp -r /opt/winery ${CATALINA_HOME}/webapps/winery \
-    && cp -r tmp/winery/org.eclipse.winery.repository.ui/target/winery-ui.war ${CATALINA_HOME}/webapps/ROOT.war \
-    && cp -r tmp/winery/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war ${CATALINA_HOME}/webapps \
-    && cp -r tmp/winery/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war ${CATALINA_HOME}/webapps 
+    && cp -r tmp/winery/winery-ui.war ${CATALINA_HOME}/webapps/ROOT.war \
+    && cp -r tmp/winery/winery-topologymodeler.war ${CATALINA_HOME}/webapps \
+    && cp -r tmp/winery/winery-workflowmodeler.war ${CATALINA_HOME}/webapps 
 
 EXPOSE 8080
 
