@@ -21,9 +21,9 @@ RUN rm /dev/random && ln -s /dev/urandom /dev/random \
 RUN mkdir -p /var/opentosca/repository
 
 RUN cp /opt/winery ${CATALINA_HOME}/webapps/winery \
-    && cp tmp/winery/org.eclipse.winery.repository.ui/target/winery-ui.war ${CATALINA_HOME}/webapps/ROOT.war \
-    && cp tmp/winery/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war ${CATALINA_HOME}/webapps \
-    && cp tmp/winery/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war ${CATALINA_HOME}/webapps 
+    && cp -r tmp/winery/org.eclipse.winery.repository.ui/target/winery-ui.war ${CATALINA_HOME}/webapps/ROOT.war \
+    && cp -r tmp/winery/org.eclipse.winery.topologymodeler/target/winery-topologymodeler.war ${CATALINA_HOME}/webapps \
+    && cp -r tmp/winery/org.eclipse.winery.workflowmodeler/target/winery-workflowmodeler.war ${CATALINA_HOME}/webapps 
 
 EXPOSE 8080
 
