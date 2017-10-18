@@ -20,24 +20,24 @@ jobs:
             docker push wederbn/engine-ia-arm:latest
           fi
           
-  build_engine_plan:
+  build_bps:
     machine: true
     steps:
       - checkout
             
       # prepare qemu to emulate an arm device on circle ci
       - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      - run: mkdir ./engine-plan/qemu
-      - run: cd ./engine-plan/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
+      - run: mkdir ./bps/qemu
+      - run: cd ./bps/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
             
       # build the docker image
-      - run: docker build -t wederbn/engine-plan-arm:latest ./engine-plan
+      - run: docker build -t wederbn/bps-arm:latest ./bps
             
       # push the image
       - run: > 
           if [ "$CIRCLE_BRANCH" == "master" ]; then
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push wederbn/engine-plan-arm:latest
+            docker push wederbn/bps-arm:latest
           fi
           
   build_container:
@@ -117,7 +117,7 @@ workflows:
   build_all_images:
     jobs:
       - build_engine_ia
-      - build_engine_plan
+      - build_bps
       - build_container
       - build_ui
       - build_winery
