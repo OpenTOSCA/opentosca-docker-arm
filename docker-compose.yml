@@ -1,7 +1,7 @@
 version: '2'
 services:
   container:
-    image: wederbn/container-arm
+    image: opentosca/container-arm
     ports:
       - '1337:1337'
     environment:
@@ -12,7 +12,7 @@ services:
     networks:
       - opentosca
   container-repository:
-    image: wederbn/winery-arm
+    image: opentosca/winery-arm
     ports:
       - '8081:8080'
     # volumes:
@@ -20,13 +20,13 @@ services:
     networks:
       - opentosca
   ui:
-    image: wederbn/ui-arm
+    image: opentosca/ui-arm
     ports:
       - '8088:8080'
     networks:
       - opentosca
   engine-plan:
-    image: wederbn/bps-arm
+    image: opentosca/bps-arm
     ports:
       - '9443:9443' # https
       - '9763:9763' # http
@@ -35,13 +35,13 @@ services:
     networks:
       - opentosca
   engine-ia:
-    image: wederbn/engine-ia-arm
+    image: opentosca/engine-ia-arm
     ports:
       - '8090:8080'
     networks:
       - opentosca
   winery:
-    image: wederbn/winery-arm
+    image: opentosca/winery-arm
     ports:
       - '8080:8080'
     # volumes:

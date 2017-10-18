@@ -11,13 +11,13 @@ jobs:
       - run: cd ./engine-ia/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
             
       # build the docker image
-      - run: docker build -t wederbn/engine-ia-arm:latest ./engine-ia      
+      - run: docker build -t opentosca/engine-ia-arm:latest ./engine-ia      
       
       # build the docker image
       - run: > 
           if [ "$CIRCLE_BRANCH" == "master" ]; then
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push wederbn/engine-ia-arm:latest
+            docker push opentosca/engine-ia-arm:latest
           fi
           
   build_bps:
@@ -31,13 +31,13 @@ jobs:
       - run: cd ./bps/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
             
       # build the docker image
-      - run: docker build -t wederbn/bps-arm:latest ./bps
+      - run: docker build -t opentosca/bps-arm:latest ./bps
             
       # push the image
       - run: > 
           if [ "$CIRCLE_BRANCH" == "master" ]; then
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push wederbn/bps-arm:latest
+            docker push opentosca/bps-arm:latest
           fi
           
   build_container:
@@ -55,13 +55,13 @@ jobs:
       - run: cd ./container/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
             
       # build the docker image
-      - run: docker build -t wederbn/container-arm:latest ./container
+      - run: docker build -t opentosca/container-arm:latest ./container
             
       # push the image
       - run: > 
           if [ "$CIRCLE_BRANCH" == "master" ]; then
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push wederbn/container-arm:latest
+            docker push opentosca/container-arm:latest
           fi
           
   build_ui:
@@ -79,13 +79,13 @@ jobs:
       - run: cd ./ui/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
             
       # build the docker image
-      - run: docker build -t wederbn/ui-arm:latest ./ui
+      - run: docker build -t opentosca/ui-arm:latest ./ui
             
       # push the image
       - run: > 
           if [ "$CIRCLE_BRANCH" == "master" ]; then
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push wederbn/ui-arm:latest
+            docker push opentosca/ui-arm:latest
           fi
           
   build_winery:
@@ -103,13 +103,13 @@ jobs:
       - run: cd ./winery/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
             
       # build the docker image
-      - run: docker build -t wederbn/winery-arm:latest ./winery
+      - run: docker build -t opentosca/winery-arm:latest ./winery
             
       # push the image
       - run: > 
           if [ "$CIRCLE_BRANCH" == "master" ]; then
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push wederbn/winery-arm:latest
+            docker push opentosca/winery-arm:latest
           fi
           
 workflows:
