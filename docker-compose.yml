@@ -1,52 +1,51 @@
 version: '2'
 services:
   container:
-    build:
-      context: ./container
-      args:
-        - GIT_BRANCH=master
+    image: wederbn/container-arm
     ports:
       - '1337:1337'
+    environment:
+      - CONTAINER_HOSTNAME=container
+      - CONTAINER_REPOSITORY_HOSTNAME=container-repository
+      - ENGINE_PLAN_HOSTNAME=engine-plan
+      - ENGINE_IA_HOSTNAME=engine-ia
     networks:
       - opentosca
-  engine-ia:
-    build: ./engine-ia
+  container-repository:
+    image: wederbn/winery-arm
     ports:
-      - '8080:8080'
+      - '8081:8080'
+    # volumes:
+    #   - <path on host system>:/var/opentosca/repository
     networks:
       - opentosca
   ui:
-    build:
-      context: ./ui
-      args:
-        - GIT_BRANCH=master
+    image: wederbn/ui-arm
     ports:
       - '8088:8080'
     networks:
       - opentosca
   engine-plan:
-    build: ./engine-plan
+    image: wederbn/bps-arm
     ports:
       - '9443:9443' # https
       - '9763:9763' # http
+    environment:
+      - ENGINE_PLAN_HOSTNAME=engine-plan
     networks:
       - opentosca
-  container-repository:
-    build:
-      context: ./winery
-      args:
-        - GIT_BRANCH=master
+  engine-ia:
+    image: wederbn/engine-ia-arm
     ports:
-      - '8081:8080'
+      - '8090:8080'
     networks:
       - opentosca
   winery:
-    build:
-      context: ./winery
-      args:
-        - GIT_BRANCH=master
+    image: wederbn/winery-arm
     ports:
-      - '8090:8080'
+      - '8080:8080'
+    # volumes:
+    #   - <path on host system>:/var/opentosca/repository
     networks:
       - opentosca
 networks:
