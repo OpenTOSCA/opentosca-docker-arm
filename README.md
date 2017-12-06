@@ -2,7 +2,7 @@
 
 # Dockerized OpenTOSCA Environment for ARM processors
 
-Dockerfiles for running the entire [OpenTOSCA](https://github.com/OpenTOSCA) stack on Arm processors.
+Dockerfiles for running the entire [OpenTOSCA](https://github.com/OpenTOSCA) stack on Arm processors. 
 
 ## Haftungsausschluss
 
