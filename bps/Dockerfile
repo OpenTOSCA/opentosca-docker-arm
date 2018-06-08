@@ -1,4 +1,4 @@
-FROM armv7/armhf-ubuntu
+FROM armv7/armhf-ubuntu:14.04
 LABEL maintainer "Johannes Wettinger <jowettinger@gmail.com>, Michael Wurster <miwurster@gmail.com>, Benjamin Weder <Benjamin.Weder@web.de>"
 
 # add qemu binary to build on circle ci
