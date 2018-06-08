@@ -4,17 +4,22 @@ services:
     image: opentosca/container-arm
     ports:
       - '1337:1337'
+      - '8081-8087:8081-8087'
     environment:
-      - CONTAINER_HOSTNAME=container
-      - CONTAINER_REPOSITORY_HOSTNAME=container-repository
-      - ENGINE_PLAN_HOSTNAME=engine-plan
+      - PUBLIC_HOSTNAME=container
       - ENGINE_IA_HOSTNAME=engine-ia
+      - ENGINE_IA_PORT=8080
+      - ENGINE_PLAN_HOSTNAME=engine-plan
+      - ENGINE_PLAN_PORT=9443
+      - ENGINE_PLAN_SERVICES_PORT=9763
+      - CONTAINER_REPOSITORY_HOSTNAME=container-repository
+      - CONTAINER_DEPLOYMENT_TESTS=false
+    # volumes:
+    #   - <path on host system>:/tmp/opentosca
     networks:
       - opentosca
   container-repository:
     image: opentosca/winery-arm
-    ports:
-      - '8081:8080'
     # volumes:
     #   - <path on host system>:/var/opentosca/repository
     networks:
@@ -31,13 +36,16 @@ services:
       - '9443:9443' # https
       - '9763:9763' # http
     environment:
-      - ENGINE_PLAN_HOSTNAME=engine-plan
+      - PUBLIC_HOSTNAME=engine-plan
     networks:
       - opentosca
   engine-ia:
     image: opentosca/engine-ia-arm
     ports:
       - '8090:8080'
+      - '1883:1883' # MQTT
+    # volumes:
+    #   - <path on host system>:/usr/local/tomcat/webapps
     networks:
       - opentosca
   winery:
