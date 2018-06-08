@@ -20,19 +20,21 @@ COPY code/org.opentosca.container.product/target/products/org.opentosca.containe
 
 WORKDIR /opt/opentosca/container
 
-# Install dockerize
-RUN rm /dev/random && ln -s /dev/urandom /dev/random \
-    && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz \
-    && rm dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz
+# Install wget 
+RUN apt-get update -qq && apt-get install -qqy wget && apt-get install -qqy software-properties-common
 
 # Install Java
-RUN apt-get update -qq && apt-get install -qqy software-properties-common
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update -qq && \
   apt-get install -qqy oracle-java8-installer
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+
+# Install dockerize
+RUN rm /dev/random && ln -s /dev/urandom /dev/random \
+    && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz
 
 # Add config file with placeholders
 ADD config.ini.tpl /opt/opentosca/container/config.ini.tpl
