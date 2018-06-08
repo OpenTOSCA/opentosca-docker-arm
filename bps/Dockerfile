@@ -10,7 +10,7 @@ ARG BPEL4RESTLIGHT_DOWNLOAD_URL=http://files.opentosca.org/third-party/v2.0.0/bp
 ARG DOCKERIZE_VERSION=v0.3.0
 
 ENV BPS_HOME /opt/bps
-ENV REMOTE_HOSTNAME localhost
+ENV PUBLIC_HOSTNAME localhost
 
 # Install Java
 RUN apt-get update -qq && apt-get install -qqy software-properties-common
