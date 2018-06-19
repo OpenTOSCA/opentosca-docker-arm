@@ -5,8 +5,8 @@ LABEL maintainer "Johannes Wettinger <jowettinger@gmail.com>, Michael Wurster <m
 COPY qemu/qemu-arm-static /usr/bin/qemu-arm-static
 
 ARG BPS_HOME=/opt/bps
-ARG BPS_DOWNLOAD_URL=http://files.opentosca.org/third-party/v2.0.0/wso2bps-2.1.2-java8.zip
-ARG BPEL4RESTLIGHT_DOWNLOAD_URL=http://files.opentosca.org/third-party/v2.0.0/bpel4restlight1.1.1.jar
+ARG BPS_DOWNLOAD_URL=https://github.com/OpenTOSCA/bps/releases/download/bps-java8/wso2bps-2.1.2-java8.zip
+ARG BPEL4RESTLIGHT_DOWNLOAD_URL=https://github.com/OpenTOSCA/bps/releases/download/bps-java8/bpel4restlight1.1.1.jar
 ARG DOCKERIZE_VERSION=v0.3.0
 
 ENV BPS_HOME /opt/bps
