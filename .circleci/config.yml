@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout
       
-      # prebuild the container outside of docker (speeds the build up)
+      # prebuild the container outside of docker (speeds the build up which is very slow with ARM emulation)
       - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/container.git -b master ./container/code 
       - run: cd ./container/code && mvn package
             
@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout
       
-      # prebuild the ui outside of docker (speeds the build up)
+      # prebuild the ui outside of docker (speeds the build up which is very slow with ARM emulation)
       - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/ui.git -b master ./ui/code 
       - run: cd ./ui/code && mvn package
             
@@ -93,7 +93,7 @@ jobs:
     steps:
       - checkout
       
-      # prebuild the container client outside of docker (speeds the build up)
+      # prebuild winery outside of docker (speeds the build up which is very slow with ARM emulation)
       - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/winery.git -b master ./winery/code 
       - run: cd ./winery/code && mvn package -DskipTests
             
@@ -112,6 +112,27 @@ jobs:
             docker push opentosca/winery-arm:latest
           fi
           
+  build_ode:
+    machine: true
+    steps:
+      - checkout
+      - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/ode.git -b master ./ode/code
+            
+      # prepare qemu to emulate an arm device on circle ci
+      - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
+      - run: mkdir ./ode/qemu
+      - run: cd ./ode/qemu && curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.6.0/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz
+            
+      # build the docker image
+      - run: docker build -t opentosca/ode-arm:latest ./ode
+            
+      # push the image
+      - run: > 
+          if [ "$CIRCLE_BRANCH" == "master" ]; then
+            docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+            docker push opentosca/ode-arm:latest
+          fi
+          
 workflows:
   version: 2
   build_all_images:
@@ -121,3 +142,4 @@ workflows:
       - build_container
       - build_ui
       - build_winery
+      - build_ode
