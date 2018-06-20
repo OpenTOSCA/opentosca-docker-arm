@@ -4,6 +4,8 @@
 
 Dockerfiles for running the entire [OpenTOSCA](https://github.com/OpenTOSCA) stack on Arm processors. 
 
+For tips, tricks and further information have a look at the [opentosca-docker](https://github.com/OpenTOSCA/opentosca-docker) repository.
+
 ## Haftungsausschluss
 
 Dies ist ein Forschungsprototyp.
