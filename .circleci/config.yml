@@ -116,7 +116,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/ode.git -b master ./ode/code
+      - run: git clone --recursive --depth=1 https://github.com/OpenTOSCA/ode.git -b opentoscaimprovements ./ode/code
             
       # prepare qemu to emulate an arm device on circle ci
       - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset

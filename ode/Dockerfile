@@ -6,9 +6,9 @@ ENV BUILDR_ARGS="-f Rakefile clean package test=no JAVADOC=off"
 COPY ./code /workspace
 
 RUN jruby -S bundler install --gemfile=/workspace/Gemfile \
-    && bundle exec buildr $BUILDR_ARGS \
+    && buildr $BUILDR_ARGS \
     && mkdir /build \
-    && cp /workspace/axis2-war/target/ode-axis2-war-1.4-SNAPSHOT.war /build/ode.war
+    && cp /workspace/axis2-war/target/ode-axis2-war-1.3.8-SNAPSHOT.war /build/ode.war
 
 FROM arm32v6/tomcat:8-alpine
 LABEL maintainer "Johannes Wettinger <jowettinger@gmail.com>, Michael Wurster <miwurster@gmail.com>, Michael Hahn <mhahn.dev@gmail.com>, Benjamin Weder <Benjamin.Weder@web.de>"
