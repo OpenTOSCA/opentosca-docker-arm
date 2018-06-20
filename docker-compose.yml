@@ -10,10 +10,12 @@ services:
       - ENGINE_IA_HOSTNAME=engine-ia
       - ENGINE_IA_PORT=8080
       - ENGINE_PLAN_HOSTNAME=engine-plan
-      - ENGINE_PLAN_PORT=9443
-      - ENGINE_PLAN_SERVICES_PORT=9763
+      - ENGINE_PLAN=ODE
+      - ENGINE_PLAN_ROOT_URL=http://engine-plan:9763/ode
+      - ENGINE_PLAN_SERVICES_URL=http://engine-plan:9763/ode/processes
       - CONTAINER_REPOSITORY_HOSTNAME=container-repository
       - CONTAINER_DEPLOYMENT_TESTS=false
+      - CONTAINER_JAVA_OPTS=
     # volumes:
     #   - <path on host system>:/tmp/opentosca
     networks:
@@ -31,12 +33,12 @@ services:
     networks:
       - opentosca
   engine-plan:
-    image: opentosca/bps-arm
+    image: opentosca/ode-arm
     ports:
-      - '9443:9443' # https
       - '9763:9763' # http
     environment:
-      - PUBLIC_HOSTNAME=engine-plan
+      - ENGINE_PLAN_HOSTNAME=engine-plan
+      - ENGINE_PLAN_PORT=9763
     networks:
       - opentosca
   engine-ia:
