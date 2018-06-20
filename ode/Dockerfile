@@ -3,12 +3,17 @@ FROM sathwik/apache-buildr:latest-jruby-jdk8 as builder
 ENV JAVA_OPTS="-Xmx1024M -XX:MaxPermSize=512M"
 ENV BUILDR_ARGS="-f Rakefile clean package test=no JAVADOC=off"
 
+RUN apt-get update -qq && apt-get install -qqy \
+        unzip \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY ./code /workspace
 
 RUN jruby -S bundler install --gemfile=/workspace/Gemfile \
     && buildr $BUILDR_ARGS \
     && mkdir /build \
-    && cp /workspace/axis2-war/target/ode-axis2-war-1.3.8-SNAPSHOT.war /build/ode.war
+    && cp /workspace/axis2-war/target/ode-axis2-war-1.3.8-SNAPSHOT.war /build/ode.war \
+    && unzip /build/ode.war -d /build/ode
 
 FROM arm32v6/tomcat:8-alpine
 LABEL maintainer "Johannes Wettinger <jowettinger@gmail.com>, Michael Wurster <miwurster@gmail.com>, Michael Hahn <mhahn.dev@gmail.com>, Benjamin Weder <Benjamin.Weder@web.de>"
@@ -35,7 +40,7 @@ RUN rm /dev/random && ln -s /dev/urandom /dev/random \
     && rm dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz
 
 # add the prebuild ode file
-COPY --from=builder /build/ode.war ${CATALINA_HOME}/webapps/ode.war
+COPY --from=builder /build/ode ${CATALINA_HOME}/webapps/ode
 
 ADD tomcat-users.xml.tpl ${CATALINA_HOME}/conf/tomcat-users.xml.tpl
 ADD manager.xml ${CATALINA_HOME}/conf/Catalina/localhost/manager.xml
